@@ -1,7 +1,7 @@
 # Microservice: Address Validator
 .NET Microservice for Address Validation
 
-# Address Validators
+## Address Validators
 This microservice supports these address validators.
 
 * Smarty Streets
