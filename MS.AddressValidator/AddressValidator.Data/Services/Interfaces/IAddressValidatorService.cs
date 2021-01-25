@@ -6,5 +6,6 @@ namespace AddressValidator.Data.Services.Interfaces
 {
     interface IAddressValidatorService
     {
+
     }
 }
