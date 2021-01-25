@@ -7,6 +7,11 @@ namespace AddressValidator.Data.Models
     {
         public AddressValidatorType AddressValidatorService { get; set; }
 
-        public List<Address> Addresses { get; set; }
+        public List<Address> Addresses { get; set; } = new List<Address>();
+
+        public AddressValidatorRequest()
+        {
+
+        }
     }
 }
