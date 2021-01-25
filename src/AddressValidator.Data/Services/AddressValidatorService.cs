@@ -4,6 +4,7 @@ using AddressValidator.Data.Services.Interfaces;
 using AddressValidator.Data.Services.Validators.Interfaces;
 using System;
 using System.Threading.Tasks;
+using Prometheus;
 
 namespace AddressValidator.Data.Services
 {
@@ -11,6 +12,11 @@ namespace AddressValidator.Data.Services
     {
         private readonly Func<AddressValidatorType, IAddressValidatorApi> _validatorFactory;
         private IAddressValidatorApi _api;
+
+        // prometheus
+        private static readonly Counter _promValidAddressCounter = Metrics.CreateCounter("addressvalidation_valid_total", "Number of addresses successfully validated.");
+        private static readonly Counter _promInvalidAddressCounter = Metrics.CreateCounter("addressvalidation_invalid_total", "Number of addresses unsuccessfully validated.");
+
 
         public AddressValidatorService(Func<AddressValidatorType, IAddressValidatorApi> validatorFactory)
         {
