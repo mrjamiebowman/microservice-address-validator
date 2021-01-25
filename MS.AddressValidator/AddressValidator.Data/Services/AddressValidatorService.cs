@@ -32,12 +32,18 @@ namespace AddressValidator.Data.Services
             // result
             var result = new AddressValidatorResult(request);
 
-            // validate
-            foreach (var address in result.ValidatedAddresses)
+            if (_api.BatchCapable == true)
             {
-                await _api.ValidateAddressesAsync(address);
+                await _api.ValidateAddressesAsync(result.ValidatedAddresses);
+            } else
+            {
+                // validate
+                //foreach (var address in result.ValidatedAddresses)
+                //{
+                //    await _api.ValidateAddressesAsync(address);
+                //}
             }
-
+            
             return result;
         }
     }

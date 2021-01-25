@@ -32,5 +32,31 @@ namespace AddressValidator.Data.Tests
             // assert (this is irrelevant)
             Assert.NotNull(json);
         }
+
+        [Fact]
+        public void CreateJsonAddressValidatorRequestBadAddressTest()
+        {
+            // arrange
+            var request = new AddressValidatorRequest();
+            request.AddressValidatorService = AddressValidatorType.Default;
+
+            var address1 = new Address
+            {
+                StreetAddress1 = "1337 One Microsoft Way",
+                StreetAddress2 = null,
+                City = "Redmond",
+                State = "WA",
+                PostalCode = "27104",
+                Country = "USA"
+            };
+
+            request.Addresses.Add(address1);
+
+            // act
+            string json = JsonSerializer.Serialize(request);
+
+            // assert (this is irrelevant)
+            Assert.NotNull(json);
+        }
     }
 }

@@ -1,10 +1,14 @@
-﻿using AddressValidator.Data.Models;
+﻿using System.Collections.Generic;
+using AddressValidator.Data.Models;
 using System.Threading.Tasks;
 
 namespace AddressValidator.Data.Services.Validators.Interfaces
 {
     public interface IAddressValidatorApi
     {
-        Task ValidateAddressesAsync(ValidatedAddress address);
+        public bool BatchCapable { get; }
+
+        Task ValidateAddressAsync(ValidatedAddress address);
+        Task ValidateAddressesAsync(List<ValidatedAddress> addresses);
     }
 }
