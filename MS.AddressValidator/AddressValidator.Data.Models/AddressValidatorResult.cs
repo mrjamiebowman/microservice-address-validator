@@ -9,10 +9,10 @@ namespace AddressValidator.Data.Models
         /// Returns true or false if all of the addresses are valid.
         /// Each individual address can be validated in the Addresses property.
         /// </summary>
-        public bool ValidAddresses {
+        public bool AddressesValid {
             get
             {
-                if (!Addresses.Any(x => x.Valid == false))
+                if (!ValidatedAddresses.Any(x => x.Valid == false))
                 {
                     return true;
                 }
@@ -21,6 +21,18 @@ namespace AddressValidator.Data.Models
             }
         }
 
-        new public List<ValidatedAddress> Addresses { get; set; }
+        public List<ValidatedAddress> ValidatedAddresses { get; set; } = new List<ValidatedAddress>();
+
+
+        public AddressValidatorResult()
+        {
+
+        }
+
+        public AddressValidatorResult(AddressValidatorRequest request) : this()
+        {
+            AddressValidatorService = request.AddressValidatorService;
+            ValidatedAddresses = request.Addresses.Select(x => new ValidatedAddress(x)).ToList();
+        }
     }
 }

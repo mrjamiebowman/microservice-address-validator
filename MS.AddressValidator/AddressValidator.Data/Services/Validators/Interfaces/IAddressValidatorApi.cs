@@ -5,6 +5,6 @@ namespace AddressValidator.Data.Services.Validators.Interfaces
 {
     public interface IAddressValidatorApi
     {
-        Task<AddressValidatorResult> ValidateAddressesAsync(AddressValidatorRequest request);
+        Task ValidateAddressesAsync(ValidatedAddress address);
     }
 }

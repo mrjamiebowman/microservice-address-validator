@@ -29,8 +29,15 @@ namespace AddressValidator.Data.Services
             // get api
             _api = await GetAddressValidatorService(request.AddressValidatorService);
 
+            // result
+            var result = new AddressValidatorResult(request);
+
             // validate
-            var result = await _api.ValidateAddressesAsync(request);
+            foreach (var address in result.ValidatedAddresses)
+            {
+                await _api.ValidateAddressesAsync(address);
+            }
+
             return result;
         }
     }

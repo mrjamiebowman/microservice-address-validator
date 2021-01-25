@@ -6,7 +6,7 @@ namespace AddressValidator.Data.Services.Validators
 {
     public class UspsAddressValidator : IAddressValidatorApi
     {
-        public Task<AddressValidatorResult> ValidateAddressesAsync(AddressValidatorRequest request)
+        public Task ValidateAddressesAsync(ValidatedAddress address)
         {
             throw new System.NotImplementedException();
         }

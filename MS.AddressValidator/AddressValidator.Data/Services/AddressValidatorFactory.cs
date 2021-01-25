@@ -1,10 +1,10 @@
 ﻿using AddressValidator.Data.Models.Enums;
 using AddressValidator.Data.Services.Interfaces;
+using AddressValidator.Data.Services.Validators;
 using AddressValidator.Data.Services.Validators.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
-using AddressValidator.Data.Services.Validators;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace AddressValidator.Data.Services
 {

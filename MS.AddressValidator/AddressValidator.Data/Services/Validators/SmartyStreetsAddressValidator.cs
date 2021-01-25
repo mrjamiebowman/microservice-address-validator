@@ -14,9 +14,10 @@ namespace AddressValidator.Data.Services.Validators
             _smartyStreetsConfiguration = smartyStreetsConfiguration;
         }
 
-        public Task<AddressValidatorResult> ValidateAddressesAsync(AddressValidatorRequest request)
+        public Task ValidateAddressesAsync(ValidatedAddress address)
         {
-            throw new System.NotImplementedException();
+            address.Valid = true;
+            return Task.CompletedTask;
         }
     }
 }
