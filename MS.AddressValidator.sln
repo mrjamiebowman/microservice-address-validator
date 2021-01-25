@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddressValidator.Data", "MS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddressValidator.Api", "MS.AddressValidator\AddressValidator.Api\AddressValidator.Api.csproj", "{B2CE98FD-9FDA-4E0D-A6AF-EF9DF44A873B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressValidator.Data.Tests", "tests\AddressValidator.Data.Tests\AddressValidator.Data.Tests.csproj", "{2ED872DE-1253-4D68-838B-8A157ADE3364}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{B2CE98FD-9FDA-4E0D-A6AF-EF9DF44A873B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2CE98FD-9FDA-4E0D-A6AF-EF9DF44A873B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2CE98FD-9FDA-4E0D-A6AF-EF9DF44A873B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ED872DE-1253-4D68-838B-8A157ADE3364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ED872DE-1253-4D68-838B-8A157ADE3364}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ED872DE-1253-4D68-838B-8A157ADE3364}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ED872DE-1253-4D68-838B-8A157ADE3364}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{3BFAB226-6011-4D02-9C98-461156FA61B0} = {4E043A66-31FC-415E-B70C-E6F39A99FAD5}
 		{0978DAE0-7D1B-46EE-AE7C-8275CCD8EAE5} = {4E043A66-31FC-415E-B70C-E6F39A99FAD5}
 		{B2CE98FD-9FDA-4E0D-A6AF-EF9DF44A873B} = {4E043A66-31FC-415E-B70C-E6F39A99FAD5}
+		{2ED872DE-1253-4D68-838B-8A157ADE3364} = {233D89C7-E9EB-4C9F-9A76-949F027D4B7A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B376C99C-0431-4C90-BD05-8C616E900EB1}
