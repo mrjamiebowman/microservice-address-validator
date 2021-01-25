@@ -1,4 +1,5 @@
 ﻿using AddressValidator.Data.Models;
+using AddressValidator.Data.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -8,12 +9,16 @@ namespace AddressValidator.Api.Controllers
     [ApiController]
     public class ValidateAddressController : ControllerBase
     {
+        private readonly IAddressValidatorFactoryService _addressValidatorFactoryService;
+
+        public ValidateAddressController(IAddressValidatorFactoryService addressValidatorFactoryService)
+        {
+            _addressValidatorFactoryService = addressValidatorFactoryService;
+        }
 
         public async Task<Data.Models.AddressValidatorResult> ValidateAddressAsync(AddressValidatorRequest request)
         {
-            var result = new Data.Models.AddressValidatorResult();
-
-            return await Task.FromResult(result);
+            return await _addressValidatorFactoryService.ValidateAddressesAsync(request);
         }
     }
 }
