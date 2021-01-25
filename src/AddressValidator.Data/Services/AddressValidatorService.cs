@@ -3,6 +3,7 @@ using AddressValidator.Data.Models.Enums;
 using AddressValidator.Data.Services.Interfaces;
 using AddressValidator.Data.Services.Validators.Interfaces;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Prometheus;
 
@@ -49,7 +50,11 @@ namespace AddressValidator.Data.Services
                 //    await _api.ValidateAddressesAsync(address);
                 //}
             }
-            
+
+            // prometheus
+            _promValidAddressCounter.Inc(result.ValidatedAddresses.Where(x => x.Valid == true).Count());
+            _promInvalidAddressCounter.Inc(result.ValidatedAddresses.Where(x => x.Valid == false).Count());
+
             return result;
         }
     }
