@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\MS.AddressValidator\AddressValidator.Data.Models\AddressValidator.Data.Models.csproj" />
+    <ProjectReference Include="..\..\src\AddressValidator.Data.Models\AddressValidator.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>
