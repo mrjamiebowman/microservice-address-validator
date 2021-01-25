@@ -10,6 +10,7 @@ This microservice supports these address validators.
 ## AppSettings.json
 This file goes in the root of the AddressValidator.Api project. I'm not checking this in and ignoring it so my API keys don't accidentally get checked in.
 
+##### src/AddressValidator.Api/appsettings.json
 	{
 	  "Logging": {
 		"LogLevel": {
