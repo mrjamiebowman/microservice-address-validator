@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using AddressValidator.Data.Configuration;
+using AddressValidator.Data.Models.Enums;
 using AddressValidator.Data.Services;
 using AddressValidator.Data.Services.Interfaces;
 using AddressValidator.Data.Services.Validators;
@@ -13,7 +14,7 @@ namespace AddressValidator.Data.Extensions
 {
     public static class AddressValidatorServicesExtension
     {
-        public static void AddAddressValidatorServicesExtension(this IServiceCollection services, IConfiguration config)
+        public static void AddAddressValidatorServices(this IServiceCollection services, IConfiguration config)
         {
             // config
             var smartyStreetsConfig = new SmartyStreetsConfiguration();
@@ -21,10 +22,15 @@ namespace AddressValidator.Data.Extensions
             services.AddSingleton<SmartyStreetsConfiguration>(smartyStreetsConfig);
 
             // factories
-            services.AddTransient<IAddressValidatorFactoryService, AddressValidatorFactoryService>();
+            services.AddTransient<IAddressValidatorFactory, AddressValidatorFactory>();
+            services.AddSingleton<Func<AddressValidatorType, IAddressValidatorApi>>(AddressValidatorFactory.GetAddressValidatorApi);
 
             // validator services
-            services.AddTransient<ISmartyStreetsAddressValidator, SmartyStreetsAddressValidator>();
+            services.AddTransient<IAddressValidatorService, AddressValidatorService>();
+
+            // validator apis
+            services.AddTransient<IAddressValidatorApi, SmartyStreetsAddressValidator>();
+            services.AddTransient<IAddressValidatorApi, UspsAddressValidator>();
         }
     }
 }

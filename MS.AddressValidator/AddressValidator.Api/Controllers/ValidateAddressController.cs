@@ -5,20 +5,21 @@ using System.Threading.Tasks;
 
 namespace AddressValidator.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class ValidateAddressController : ControllerBase
     {
-        private readonly IAddressValidatorFactoryService _addressValidatorFactoryService;
+        private readonly IAddressValidatorService _addressValidatorService;
 
-        public ValidateAddressController(IAddressValidatorFactoryService addressValidatorFactoryService)
+        public ValidateAddressController(IAddressValidatorService addressValidatorService)
         {
-            _addressValidatorFactoryService = addressValidatorFactoryService;
+            _addressValidatorService = addressValidatorService;
         }
 
+        [HttpPost]
         public async Task<Data.Models.AddressValidatorResult> ValidateAddressAsync(AddressValidatorRequest request)
         {
-            return await _addressValidatorFactoryService.ValidateAddressesAsync(request);
+            return await _addressValidatorService.ValidateAddressesAsync(request);
         }
     }
 }
