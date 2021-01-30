@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using AddressValidator.Data.Models.Enums;
 
 namespace AddressValidator.Data.Models.Configuration
@@ -41,12 +43,16 @@ namespace AddressValidator.Data.Models.Configuration
             get
             {
                 if (ConfigurationType == ConfigurationTypeEnum.Default) {
-                    return $"DefaultCompany_{ApiName}";
+                    var str = $"DefaultCompany_{ApiName}";
+                    str = Regex.Replace(str, "[^a-zA-Z0-9]", "_");
+                    return str;
                 }
 
                 if (ConfigurationType == ConfigurationTypeEnum.Companies)
                 {
-                    return $"{CompanyName}_{AppName}_{ApiName}";
+                    var str = $"{CompanyName}_{AppName}_{ApiName}";
+                    str = Regex.Replace(str, "[^a-zA-Z0-9]", "_");
+                    return str;
                 }
 
                 return string.Empty;

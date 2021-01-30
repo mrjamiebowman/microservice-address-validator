@@ -65,9 +65,10 @@ namespace AddressValidator.Data.Services
         {
             var apiconfig = new Dictionary<string, ConfigurationExpiration>();
 
-            Func<string, string, string, DateTime, ConfigurationExpiration> createConfigExp = (string companyName, string appName, string apiName, DateTime expirationDate) =>
+            Func<ConfigurationTypeEnum, string, string, string, DateTime, ConfigurationExpiration> createConfigExp = (ConfigurationTypeEnum configurationType, string companyName, string appName, string apiName, DateTime expirationDate) =>
             {
                 var configExp = new ConfigurationExpiration();
+                configExp.ConfigurationType = configurationType;
                 configExp.CompanyName = companyName;
                 configExp.AppName = appName;
                 configExp.ApiName = apiName;
@@ -102,23 +103,41 @@ namespace AddressValidator.Data.Services
             // validate default configuration
             if (configurationType == ConfigurationTypeEnum.Default)
             {
-                if (_defaultCompanyConfig.SmartyStreets.Expiration != null)
+                if (_defaultCompanyConfig.SmartyStreets?.Expiration != null)
                 {
                     // smarty streets
-                    ConfigurationExpiration config = createConfigExp(DefaultCompanyConfiguration.Position, null, SmartyStreetsConfiguration.Position, _defaultCompanyConfig.SmartyStreets.Expiration.Value);
+                    ConfigurationExpiration config = createConfigExp(configurationType, DefaultCompanyConfiguration.Position, null, SmartyStreetsConfiguration.Position, _defaultCompanyConfig.SmartyStreets.Expiration.Value);
                     apiconfig.Add(config.Key, config);
                 }
 
-                if (_defaultCompanyConfig.USPS.Expiration != null)
+                if (_defaultCompanyConfig.USPS?.Expiration != null)
                 {
                     // usps
-                    ConfigurationExpiration config = createConfigExp(DefaultCompanyConfiguration.Position, null, UspsConfiguration.Position, _defaultCompanyConfig.USPS.Expiration.Value);
+                    ConfigurationExpiration config = createConfigExp(configurationType, DefaultCompanyConfiguration.Position, null, UspsConfiguration.Position, _defaultCompanyConfig.USPS.Expiration.Value);
                     apiconfig.Add(config.Key, config);
                 }
             } else if (configurationType == ConfigurationTypeEnum.Companies)
             {
                 // validate multi-tenancy with companies/applications
-                
+                foreach(var company in _companiesConfiguration.Configuration)
+                {
+                    foreach (var app in company.Value.Applications)
+                    {
+                        if (app.Value.SmartyStreets?.Expiration != null)
+                        {
+                            // smarty streets
+                            ConfigurationExpiration config = createConfigExp(configurationType, company.Value.Name, app.Value.Name, SmartyStreetsConfiguration.Position, app.Value.SmartyStreets.Expiration.Value);
+                            apiconfig.Add(config.Key, config);
+                        }
+
+                        if (app.Value.USPS?.Expiration != null)
+                        {
+                            // usps
+                            ConfigurationExpiration config = createConfigExp(configurationType, company.Value.Name, app.Value.Name, UspsConfiguration.Position, app.Value.USPS.Expiration.Value);
+                            apiconfig.Add(config.Key, config);
+                        }
+                    }
+                } 
             }
 
             return apiconfig;
