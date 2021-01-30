@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,12 +61,9 @@ namespace AddressValidator.Data.Services
             return apiConfig;
         }
 
-        public IEnumerable<ConfigurationExpiration> GetConfigurationExpirations(ConfigurationTypeEnum configurationType, int days = 30)
+        public Dictionary<string, ConfigurationExpiration> GetConfigurationExpirations(ConfigurationTypeEnum configurationType, int days = 30)
         {
-            var apiconfig = new List<ConfigurationExpiration>();
-
-            // HACK
-            days = 90;
+            var apiconfig = new Dictionary<string, ConfigurationExpiration>();
 
             Func<string, string, string, DateTime, ConfigurationExpiration> createConfigExp = (string companyName, string appName, string apiName, DateTime expirationDate) =>
             {
@@ -77,24 +75,25 @@ namespace AddressValidator.Data.Services
                 // expires in days
                 int expiresInDays = Convert.ToInt16((expirationDate - DateTime.UtcNow).TotalDays);
                 configExp.ExpiresInDays = expiresInDays;
+                configExp.ExpiresOn = expirationDate.ToString("d");
 
                 if (expiresInDays >= days)
                 {
                     // good
-                    configExp.IsExpired = false;
+                    configExp.Expired = false;
                 }
                 else if (expiresInDays <= days && expirationDate > DateTime.UtcNow)
                 {
                     // close to expiring
-                    configExp.IsExpired = false;
-                    configExp.IsExpiring = true;
+                    configExp.Expired = false;
+                    configExp.Expiring = true;
                 }
                 else
                 {
                     // expired
                     configExp.ExpiresInDays = 0; // so it's not a negative number...
-                    configExp.IsExpired = true;
-                    configExp.IsExpiring = false;
+                    configExp.Expired = true;
+                    configExp.Expiring = false;
                 }
 
                 return configExp;
@@ -107,18 +106,19 @@ namespace AddressValidator.Data.Services
                 {
                     // smarty streets
                     ConfigurationExpiration config = createConfigExp(DefaultCompanyConfiguration.Position, null, SmartyStreetsConfiguration.Position, _defaultCompanyConfig.SmartyStreets.Expiration.Value);
-                    apiconfig.Add(config);
+                    apiconfig.Add(config.Key, config);
                 }
 
                 if (_defaultCompanyConfig.USPS.Expiration != null)
                 {
                     // usps
                     ConfigurationExpiration config = createConfigExp(DefaultCompanyConfiguration.Position, null, UspsConfiguration.Position, _defaultCompanyConfig.USPS.Expiration.Value);
-                    apiconfig.Add(config);
+                    apiconfig.Add(config.Key, config);
                 }
             } else if (configurationType == ConfigurationTypeEnum.Companies)
             {
-
+                // validate multi-tenancy with companies/applications
+                
             }
 
             return apiconfig;

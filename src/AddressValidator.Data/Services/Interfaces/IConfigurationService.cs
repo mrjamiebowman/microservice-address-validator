@@ -8,6 +8,6 @@ namespace AddressValidator.Data.Services.Interfaces
     public interface IConfigurationService
     {
         BaseApiConfiguration GetApiConfiguration(Tenant tenant, string config);
-        IEnumerable<ConfigurationExpiration> GetConfigurationExpirations(ConfigurationTypeEnum configurationType, int days = 30);
+        Dictionary<string, ConfigurationExpiration> GetConfigurationExpirations(ConfigurationTypeEnum configurationType, int days = 30);
     }
 }
