@@ -35,7 +35,7 @@ namespace AddressValidator.Data.Services
             return Task.FromResult(_validatorFactory(addressValidator));
         }
 
-        public async Task<AddressValidatorResult> ValidateAddressesAsync(AddressValidatorType addressValidator, AddressValidatorRequest request)
+        public async Task<AddressValidatorResult> ValidateAddressesAsync(Tenant tenant, AddressValidatorType addressValidator, AddressValidatorRequest request)
         {
             // result
             var result = new AddressValidatorResult();

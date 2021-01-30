@@ -6,6 +6,6 @@ namespace AddressValidator.Data.Services.Interfaces
 {
     public interface IAddressValidatorService
     {
-        Task<AddressValidatorResult> ValidateAddressesAsync(AddressValidatorType addressValidator, AddressValidatorRequest request);
+        Task<AddressValidatorResult> ValidateAddressesAsync(Tenant tenant, AddressValidatorType addressValidator, AddressValidatorRequest request);
     }
 }

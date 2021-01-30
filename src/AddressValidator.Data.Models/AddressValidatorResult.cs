@@ -20,7 +20,8 @@ namespace AddressValidator.Data.Models
         /// </summary>
         /// <example>true</example>
         [DefaultValue(false)]
-        public bool AddressesValid {
+        public bool IsValid
+        {
             get
             {
                 if (Addresses.Count > 0 && !Addresses.Any(x => x.Valid == false))

@@ -42,10 +42,10 @@ namespace AddressValidator.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [SwaggerRequestExample(typeof(AddressValidatorRequest), typeof(AddressValidatorRequestExample))]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(AddressValidatorResultExample))]
-        public async Task<Data.Models.AddressValidatorResult> ValidateAddressAsync([FromQuery] AddressValidatorType addressValidator, AddressValidatorRequest request)
+        public async Task<Data.Models.AddressValidatorResult> ValidateAddressAsync([FromHeader(Name = "CompanyID")] int? companyId, [FromHeader(Name ="ApplicationID")] int? applicationId, [FromQuery] AddressValidatorType addressValidator, AddressValidatorRequest request)
         {
-            var tenant = new Tenant();
-            return await _addressValidatorService.ValidateAddressesAsync(addressValidator, request);
+            var tenant = new Tenant(companyId, applicationId);
+            return await _addressValidatorService.ValidateAddressesAsync(tenant, addressValidator, request);
         }
     }
 }
