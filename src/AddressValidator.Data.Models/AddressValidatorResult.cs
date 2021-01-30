@@ -1,17 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using AddressValidator.Data.Models.Enums;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using AddressValidator.Data.Models.Enums;
 
 namespace AddressValidator.Data.Models
 {
     public class AddressValidatorResult
     {
+        /// <summary>
+        /// Address Validator Type (SmartyStreets, USPS)
+        /// </summary>
+        /// <example>1</example>
         public AddressValidatorType AddressValidatorService { get; set; }
 
         /// <summary>
         /// Returns true or false if all of the addresses are valid.
         /// Each individual address can be validated in the Addresses property.
         /// </summary>
+        /// <example>true</example>
+        [DefaultValue(false)]
         public bool AddressesValid {
             get
             {

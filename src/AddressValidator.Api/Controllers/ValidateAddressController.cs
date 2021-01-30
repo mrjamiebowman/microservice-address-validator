@@ -1,13 +1,18 @@
 ﻿using AddressValidator.Data.Models;
 using AddressValidator.Data.Services.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Filters;
 using System.Threading.Tasks;
+using AddressValidator.Data.Models.Swagger;
 
 namespace AddressValidator.Api.Controllers
 {
-    [Route("api/v1/[controller]")]
+
     [ApiController]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
     public class ValidateAddressController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -20,7 +25,18 @@ namespace AddressValidator.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost]
+        /// <summary>
+        /// Queries address validator service to validate address(es).
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>The AddressValidatorResult object with validated addresses.</returns>
+        /// <response code="200">Addresses validated</response>
+        /// <response code="500">If the request fails</response>     
+        [HttpPost()]
+        [ProducesResponseType(typeof(AddressValidatorResult),StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerRequestExample(typeof(AddressValidatorRequest), typeof(AddressValidatorRequestExample))]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(AddressValidatorResultExample))]
         public async Task<Data.Models.AddressValidatorResult> ValidateAddressAsync(AddressValidatorRequest request)
         {
             var tenant = new Tenant();

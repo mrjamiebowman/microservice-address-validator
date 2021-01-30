@@ -8,10 +8,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.Examples;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace AddressValidator.Api
 {
@@ -34,7 +37,13 @@ namespace AddressValidator.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AddressValidator.Api", Version = "v1" });
+
+                // enable swagger request/response examples
+                c.ExampleFilters();
             });
+
+            // swagger examples
+            services.AddCustomSwaggerExamples();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
