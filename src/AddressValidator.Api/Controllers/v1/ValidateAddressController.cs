@@ -12,7 +12,7 @@ using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 
 namespace AddressValidator.Api.Controllers.v1
 {
-
+    [ApiVersion("1.0")]
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]

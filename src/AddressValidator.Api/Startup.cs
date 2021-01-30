@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using AddressValidator.Api.Extensions;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Swashbuckle.AspNetCore.Filters;
 
@@ -45,6 +46,18 @@ namespace AddressValidator.Api
             services.AddCustomAutoMapperService();
 
             services.AddCustomHealthChecks();
+
+            services.AddApiVersioning(o =>
+            {
+                o.AssumeDefaultVersionWhenUnspecified = true;
+                o.DefaultApiVersion = new ApiVersion(1, 0);
+                o.ReportApiVersions = true;
+                o.ApiVersionReader = ApiVersionReader.Combine(
+                    new MediaTypeApiVersionReader("v"),
+                    new HeaderApiVersionReader("api-version"),
+                    new QueryStringApiVersionReader("v", "api-version")
+                );
+            });
 
             services.AddSwaggerGen(c =>
             {
