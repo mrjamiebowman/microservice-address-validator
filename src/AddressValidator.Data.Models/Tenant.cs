@@ -4,6 +4,9 @@ using System.Text.Json.Serialization;
 
 namespace AddressValidator.Data.Models
 {
+    /// <summary>
+    /// Optional configuration for multi-tenant environment.
+    /// </summary>
     internal class Tenant : InternalClasses
     {
         [JsonIgnore]
