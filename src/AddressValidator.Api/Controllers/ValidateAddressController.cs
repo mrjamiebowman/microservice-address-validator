@@ -23,6 +23,7 @@ namespace AddressValidator.Api.Controllers
         [HttpPost]
         public async Task<Data.Models.AddressValidatorResult> ValidateAddressAsync(AddressValidatorRequest request)
         {
+            var tenant = new Tenant();
             return await _addressValidatorService.ValidateAddressesAsync(request);
         }
     }

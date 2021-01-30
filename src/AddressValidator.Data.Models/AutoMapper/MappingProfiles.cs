@@ -9,7 +9,8 @@ namespace AddressValidator.Data.Models.AutoMapper
     {
         public MappingProfiles()
         {
-
+            CreateMap<Address, ValidatedAddress>();
+            CreateMap<AddressValidatorRequest, AddressValidatorResult>();
         }
     }
 }

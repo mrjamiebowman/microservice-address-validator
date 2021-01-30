@@ -5,6 +5,7 @@ using AddressValidator.Data.Services.Validators.Interfaces;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Prometheus;
 
 namespace AddressValidator.Data.Services
@@ -12,6 +13,8 @@ namespace AddressValidator.Data.Services
     public class AddressValidatorService : IAddressValidatorService
     {
         private readonly Func<AddressValidatorType, IAddressValidatorApi> _validatorFactory;
+        private readonly IMapper _mapper;
+
         private IAddressValidatorApi _api;
 
         // prometheus
@@ -19,8 +22,9 @@ namespace AddressValidator.Data.Services
         private static readonly Counter _promInvalidAddressCounter = Metrics.CreateCounter("addressvalidation_invalid_total", "Number of addresses unsuccessfully validated.");
 
 
-        public AddressValidatorService(Func<AddressValidatorType, IAddressValidatorApi> validatorFactory)
+        public AddressValidatorService(Func<AddressValidatorType, IAddressValidatorApi> validatorFactory, IMapper mapper)
         {
+            _mapper = mapper;
             _validatorFactory = validatorFactory;
         }
 
@@ -33,15 +37,18 @@ namespace AddressValidator.Data.Services
 
         public async Task<AddressValidatorResult> ValidateAddressesAsync(AddressValidatorRequest request)
         {
+            // result
+            var result = new AddressValidatorResult();
+
+            // map request to result object
+            result = _mapper.Map<AddressValidatorResult>(request);
+
             // get api
             _api = await GetAddressValidatorService(request.AddressValidatorService);
-
-            // result
-            var result = new AddressValidatorResult(request);
-
+            
             if (_api.BatchCapable == true)
             {
-                await _api.ValidateAddressesAsync(result.ValidatedAddresses);
+                await _api.ValidateAddressesAsync(result.Addresses);
             } else
             {
                 // validate
@@ -52,8 +59,8 @@ namespace AddressValidator.Data.Services
             }
 
             // prometheus
-            _promValidAddressCounter.Inc(result.ValidatedAddresses.Where(x => x.Valid == true).Count());
-            _promInvalidAddressCounter.Inc(result.ValidatedAddresses.Where(x => x.Valid == false).Count());
+            _promValidAddressCounter.Inc(result.Addresses.Where(x => x.Valid == true).Count());
+            _promInvalidAddressCounter.Inc(result.Addresses.Where(x => x.Valid == false).Count());
 
             return result;
         }

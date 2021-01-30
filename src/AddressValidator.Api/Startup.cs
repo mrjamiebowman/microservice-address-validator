@@ -29,6 +29,7 @@ namespace AddressValidator.Api
         {
             services.AddControllers();
             services.AddAddressValidatorServices(Configuration);
+            services.AddCustomAutoMapperService();
 
             services.AddSwaggerGen(c =>
             {
