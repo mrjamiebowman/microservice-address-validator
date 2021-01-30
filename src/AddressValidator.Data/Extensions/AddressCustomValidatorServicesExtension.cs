@@ -12,7 +12,7 @@ using AddressValidator.Data.Services.Validators.Interfaces;
 
 namespace AddressValidator.Data.Extensions
 {
-    public static class AddressValidatorServicesExtension
+    public static class AddressCustomValidatorServicesExtension
     {
         public static void AddAddressValidatorServices(this IServiceCollection services, IConfiguration config)
         {
