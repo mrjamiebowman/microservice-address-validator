@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AddressValidator.Api.Health;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AddressValidator.Api.Extensions

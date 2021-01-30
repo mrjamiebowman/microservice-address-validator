@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AddressValidator.Data.Configuration.Metadata
+﻿namespace AddressValidator.Data.Configuration.Metadata
 {
-    public class ApplicationConfiguration
+    public class ApplicationConfiguration : BaseApiGroupConfiguration
     {
-        public string Name { get; set; }
 
-        public SmartyStreetsConfiguration SmartyStreets { get; set; }
-
-        public UspsConfiguration USPS { get; set; }
     }
 }

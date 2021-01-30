@@ -1,7 +1,5 @@
-﻿using System;
+﻿using AddressValidator.Data.Configuration.Metadata;
 using System.Collections.Generic;
-using System.Text;
-using AddressValidator.Data.Configuration.Metadata;
 
 namespace AddressValidator.Data.Configuration
 {

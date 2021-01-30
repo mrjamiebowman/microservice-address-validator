@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AddressValidator.Data.Services.Interfaces;
 
-namespace AddressValidator.Api.Extensions
+namespace AddressValidator.Api.Health
 {
     public class ExpiredApiConfigurationHealthCheck : IHealthCheck
     {
@@ -24,6 +24,10 @@ namespace AddressValidator.Api.Extensions
         public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context,  CancellationToken cancellationToken = default(CancellationToken))
         {
             var healthCheckResultHealthy = true;
+
+            // heck default configuration
+
+            // check companies/applications configuration
 
             if (healthCheckResultHealthy)
             {
