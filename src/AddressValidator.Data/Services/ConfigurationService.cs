@@ -106,14 +106,14 @@ namespace AddressValidator.Data.Services
                 if (_defaultCompanyConfig.SmartyStreets.Expiration != null)
                 {
                     // smarty streets
-                    ConfigurationExpiration config = createConfigExp("Default Company", null, SmartyStreetsConfiguration.Position, _defaultCompanyConfig.SmartyStreets.Expiration.Value);
+                    ConfigurationExpiration config = createConfigExp(DefaultCompanyConfiguration.Position, null, SmartyStreetsConfiguration.Position, _defaultCompanyConfig.SmartyStreets.Expiration.Value);
                     apiconfig.Add(config);
                 }
 
                 if (_defaultCompanyConfig.USPS.Expiration != null)
                 {
                     // usps
-                    ConfigurationExpiration config = createConfigExp("Default Company", null, UspsConfiguration.Position, _defaultCompanyConfig.USPS.Expiration.Value);
+                    ConfigurationExpiration config = createConfigExp(DefaultCompanyConfiguration.Position, null, UspsConfiguration.Position, _defaultCompanyConfig.USPS.Expiration.Value);
                     apiconfig.Add(config);
                 }
             } else if (configurationType == ConfigurationTypeEnum.Companies)
