@@ -25,7 +25,6 @@ namespace AddressValidator.Data.Models.Swagger.Examples
 
             var result = new AddressValidatorRequest
             {
-                AddressValidatorService = AddressValidatorType.SmartyStreets,
                 Addresses = addresses
             };
 

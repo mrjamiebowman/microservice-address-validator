@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace AddressValidator.Data.Models
 {
@@ -10,7 +11,7 @@ namespace AddressValidator.Data.Models
         /// <summary>
         /// Address Validator Type (SmartyStreets, USPS)
         /// </summary>
-        /// <example>1</example>
+        /// <example>SmartyStreets</example>
         public AddressValidatorType AddressValidatorService { get; set; }
 
         /// <summary>

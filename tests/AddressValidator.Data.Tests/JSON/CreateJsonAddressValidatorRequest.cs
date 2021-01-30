@@ -12,7 +12,6 @@ namespace AddressValidator.Data.Tests
         {
             // arrange
             var request = new AddressValidatorRequest();
-            request.AddressValidatorService = AddressValidatorType.Default;
 
             var address1 = new Address
             {
@@ -38,7 +37,6 @@ namespace AddressValidator.Data.Tests
         {
             // arrange
             var request = new AddressValidatorRequest();
-            request.AddressValidatorService = AddressValidatorType.Default;
 
             var address1 = new Address
             {

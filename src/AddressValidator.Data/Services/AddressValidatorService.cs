@@ -35,7 +35,7 @@ namespace AddressValidator.Data.Services
             return Task.FromResult(_validatorFactory(addressValidator));
         }
 
-        public async Task<AddressValidatorResult> ValidateAddressesAsync(AddressValidatorRequest request)
+        public async Task<AddressValidatorResult> ValidateAddressesAsync(AddressValidatorType addressValidator, AddressValidatorRequest request)
         {
             // result
             var result = new AddressValidatorResult();
@@ -44,7 +44,7 @@ namespace AddressValidator.Data.Services
             result = _mapper.Map<AddressValidatorResult>(request);
 
             // get api
-            _api = await GetAddressValidatorService(request.AddressValidatorService);
+            _api = await GetAddressValidatorService(addressValidator);
             
             if (_api.BatchCapable == true)
             {

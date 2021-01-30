@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AddressValidator.Data.Models;
+using AddressValidator.Data.Models.Enums;
 using System.Threading.Tasks;
-using AddressValidator.Data.Models;
 
 namespace AddressValidator.Data.Services.Interfaces
 {
     public interface IAddressValidatorService
     {
-        Task<AddressValidatorResult> ValidateAddressesAsync(AddressValidatorRequest request);
+        Task<AddressValidatorResult> ValidateAddressesAsync(AddressValidatorType addressValidator, AddressValidatorRequest request);
     }
 }

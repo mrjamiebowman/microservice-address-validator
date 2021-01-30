@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Filters;
 using System.Threading.Tasks;
+using System.Web.Http;
+using AddressValidator.Data.Models.Enums;
+using AddressValidator.Data.Services;
+using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 
 namespace AddressValidator.Api.Controllers
 {
@@ -32,15 +36,16 @@ namespace AddressValidator.Api.Controllers
         /// <returns>The AddressValidatorResult object with validated addresses.</returns>
         /// <response code="200">Addresses validated</response>
         /// <response code="500">If the request fails</response>     
-        [HttpPost()]
+        [HttpPost]
+        [Route("{addressValidator}")]
         [ProducesResponseType(typeof(AddressValidatorResult),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [SwaggerRequestExample(typeof(AddressValidatorRequest), typeof(AddressValidatorRequestExample))]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(AddressValidatorResultExample))]
-        public async Task<Data.Models.AddressValidatorResult> ValidateAddressAsync(AddressValidatorRequest request)
+        public async Task<Data.Models.AddressValidatorResult> ValidateAddressAsync([FromQuery] AddressValidatorType addressValidator, AddressValidatorRequest request)
         {
             var tenant = new Tenant();
-            return await _addressValidatorService.ValidateAddressesAsync(request);
+            return await _addressValidatorService.ValidateAddressesAsync(addressValidator, request);
         }
     }
 }

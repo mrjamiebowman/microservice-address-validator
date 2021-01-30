@@ -13,7 +13,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using AddressValidator.Data.Models.Swagger.Filters;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace AddressValidator.Api
@@ -30,7 +32,9 @@ namespace AddressValidator.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             services.AddAddressValidatorServices(Configuration);
             services.AddCustomAutoMapperService();
 
@@ -40,6 +44,11 @@ namespace AddressValidator.Api
 
                 // enable swagger request/response examples
                 c.ExampleFilters();
+
+                c.DescribeAllEnumsAsStrings();
+
+                // parameter filters
+                //c.ParameterFilter<AddressValidatorTypeParameterFilter>();
             });
 
             // swagger examples
