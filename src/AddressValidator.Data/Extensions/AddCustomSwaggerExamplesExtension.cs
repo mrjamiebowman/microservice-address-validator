@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using AddressValidator.Data.Models.Swagger.Examples;
+using AddressValidator.Data.Swagger.Examples;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Filters;
 

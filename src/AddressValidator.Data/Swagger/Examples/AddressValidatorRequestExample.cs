@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AddressValidator.Data.Models.Enums;
+﻿using AddressValidator.Data.Models;
 using Swashbuckle.AspNetCore.Filters;
+using System.Collections.Generic;
 
-namespace AddressValidator.Data.Models.Swagger.Examples
+namespace AddressValidator.Data.Swagger.Examples
 {
-    class AddressValidatorRequestExample : InternalClasses, IExamplesProvider<AddressValidatorRequest>
+    public class AddressValidatorRequestExample : IExamplesProvider<AddressValidatorRequest>
     {
         public AddressValidatorRequest GetExamples()
         {

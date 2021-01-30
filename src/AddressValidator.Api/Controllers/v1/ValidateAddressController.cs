@@ -1,7 +1,7 @@
 ﻿using AddressValidator.Data.Models;
 using AddressValidator.Data.Models.Enums;
-using AddressValidator.Data.Models.Swagger.Examples;
 using AddressValidator.Data.Services.Interfaces;
+using AddressValidator.Data.Swagger.Examples;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
