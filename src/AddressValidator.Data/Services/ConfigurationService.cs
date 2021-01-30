@@ -7,6 +7,7 @@ using AddressValidator.Data.Configuration;
 using AddressValidator.Data.Configuration.Metadata;
 using AddressValidator.Data.Models;
 using AddressValidator.Data.Models.Configuration;
+using AddressValidator.Data.Models.Enums;
 using AddressValidator.Data.Services.Interfaces;
 using Microsoft.Extensions.Options;
 
@@ -14,7 +15,7 @@ namespace AddressValidator.Data.Services
 {
     public class ConfigurationService : IConfigurationService
     {
-        private readonly DefaultCompanyConfiguration _defaultCompanyConfig;
+         readonly DefaultCompanyConfiguration _defaultCompanyConfig;
         private readonly CompaniesConfiguration _companiesConfiguration;
 
         public ConfigurationService(DefaultCompanyConfiguration defaultCompanyConfig, CompaniesConfiguration companiesConfiguration)
@@ -57,6 +58,70 @@ namespace AddressValidator.Data.Services
             };
 
             return apiConfig;
+        }
+
+        public IEnumerable<ConfigurationExpiration> GetConfigurationExpirations(ConfigurationTypeEnum configurationType, int days = 30)
+        {
+            var apiconfig = new List<ConfigurationExpiration>();
+
+            // HACK
+            days = 90;
+
+            Func<string, string, string, DateTime, ConfigurationExpiration> createConfigExp = (string companyName, string appName, string apiName, DateTime expirationDate) =>
+            {
+                var configExp = new ConfigurationExpiration();
+                configExp.CompanyName = companyName;
+                configExp.AppName = appName;
+                configExp.ApiName = apiName;
+
+                // expires in days
+                int expiresInDays = Convert.ToInt16((expirationDate - DateTime.UtcNow).TotalDays);
+                configExp.ExpiresInDays = expiresInDays;
+
+                if (expiresInDays >= days)
+                {
+                    // good
+                    configExp.IsExpired = false;
+                }
+                else if (expiresInDays <= days && expirationDate > DateTime.UtcNow)
+                {
+                    // close to expiring
+                    configExp.IsExpired = false;
+                    configExp.IsExpiring = true;
+                }
+                else
+                {
+                    // expired
+                    configExp.ExpiresInDays = 0; // so it's not a negative number...
+                    configExp.IsExpired = true;
+                    configExp.IsExpiring = false;
+                }
+
+                return configExp;
+            };
+
+            // validate default configuration
+            if (configurationType == ConfigurationTypeEnum.Default)
+            {
+                if (_defaultCompanyConfig.SmartyStreets.Expiration != null)
+                {
+                    // smarty streets
+                    ConfigurationExpiration config = createConfigExp("Default Company", null, SmartyStreetsConfiguration.Position, _defaultCompanyConfig.SmartyStreets.Expiration.Value);
+                    apiconfig.Add(config);
+                }
+
+                if (_defaultCompanyConfig.USPS.Expiration != null)
+                {
+                    // usps
+                    ConfigurationExpiration config = createConfigExp("Default Company", null, UspsConfiguration.Position, _defaultCompanyConfig.USPS.Expiration.Value);
+                    apiconfig.Add(config);
+                }
+            } else if (configurationType == ConfigurationTypeEnum.Companies)
+            {
+
+            }
+
+            return apiconfig;
         }
     }
 }

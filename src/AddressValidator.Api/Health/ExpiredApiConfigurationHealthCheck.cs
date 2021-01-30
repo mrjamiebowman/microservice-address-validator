@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
+﻿using System.Linq;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Threading;
 using System.Threading.Tasks;
+using AddressValidator.Data.Models.Enums;
 using AddressValidator.Data.Services.Interfaces;
 
 namespace AddressValidator.Api.Health
@@ -26,17 +28,23 @@ namespace AddressValidator.Api.Health
             var healthCheckResultHealthy = true;
 
             // check default configuration
+            var defaultConfigExps =
+                _configurationService
+                    .GetConfigurationExpirations(ConfigurationTypeEnum.Default, 30)
+                    .ToList();
 
             // check companies/applications configuration
+            if (defaultConfigExps.Any(x => x.IsExpiring || defaultConfigExps.Any(x => x.IsExpired)))
+            {
+                healthCheckResultHealthy = false;
+            }
 
             if (healthCheckResultHealthy)
             {
-                return Task.FromResult(
-                    HealthCheckResult.Healthy("A healthy result."));
+                return Task.FromResult(HealthCheckResult.Healthy("A healthy result."));
             }
 
-            return Task.FromResult(
-                HealthCheckResult.Degraded("A degraded result."));
+            return Task.FromResult(HealthCheckResult.Degraded("A degraded result."));
         }
     }
 }
