@@ -15,6 +15,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using AddressValidator.Api.Extensions;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace AddressValidator.Api
@@ -36,6 +37,8 @@ namespace AddressValidator.Api
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             services.AddAddressValidatorServices(Configuration);
             services.AddCustomAutoMapperService();
+
+            services.AddCustomHealthChecks();
 
             services.AddSwaggerGen(c =>
             {
@@ -68,6 +71,7 @@ namespace AddressValidator.Api
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHealthChecks("/health");
                 endpoints.MapControllers();
             });
         }
