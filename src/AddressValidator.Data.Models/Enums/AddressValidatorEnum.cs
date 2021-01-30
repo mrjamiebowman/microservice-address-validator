@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AddressValidator.Data.Models.Enums
 {
-    public enum AddressValidatorType
+    public enum AddressValidatorEnum
     {
         Default,
         SmartyStreets,

@@ -12,7 +12,7 @@ namespace AddressValidator.Data.Services
 {
     public class AddressValidatorService : IAddressValidatorService
     {
-        private readonly Func<AddressValidatorType, IAddressValidatorApi> _validatorFactory;
+        private readonly Func<AddressValidatorEnum, IAddressValidatorApi> _validatorFactory;
         private readonly IMapper _mapper;
 
         private IAddressValidatorApi _api;
@@ -22,7 +22,7 @@ namespace AddressValidator.Data.Services
         private static readonly Counter _promInvalidAddressCounter = Metrics.CreateCounter("addressvalidation_invalid_total", "Number of addresses unsuccessfully validated.");
 
 
-        public AddressValidatorService(Func<AddressValidatorType, IAddressValidatorApi> validatorFactory, IMapper mapper)
+        public AddressValidatorService(Func<AddressValidatorEnum, IAddressValidatorApi> validatorFactory, IMapper mapper)
         {
             _mapper = mapper;
             _validatorFactory = validatorFactory;
@@ -30,12 +30,12 @@ namespace AddressValidator.Data.Services
 
         // get validator service
 
-        public Task<IAddressValidatorApi> GetAddressValidatorService(AddressValidatorType addressValidator)
+        public Task<IAddressValidatorApi> GetAddressValidatorService(AddressValidatorEnum addressValidator)
         {
             return Task.FromResult(_validatorFactory(addressValidator));
         }
 
-        public async Task<AddressValidatorResult> ValidateAddressesAsync(Tenant tenant, AddressValidatorType addressValidator, AddressValidatorRequest request)
+        public async Task<AddressValidatorResult> ValidateAddressesAsync(Tenant tenant, AddressValidatorEnum addressValidator, AddressValidatorRequest request)
         {
             // result
             var result = new AddressValidatorResult();

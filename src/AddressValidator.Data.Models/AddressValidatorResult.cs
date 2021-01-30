@@ -12,7 +12,7 @@ namespace AddressValidator.Data.Models
         /// Address Validator Type (SmartyStreets, USPS)
         /// </summary>
         /// <example>SmartyStreets</example>
-        public AddressValidatorType AddressValidatorService { get; set; }
+        public AddressValidatorEnum AddressValidatorService { get; set; }
 
         /// <summary>
         /// Returns true or false if all of the addresses are valid.

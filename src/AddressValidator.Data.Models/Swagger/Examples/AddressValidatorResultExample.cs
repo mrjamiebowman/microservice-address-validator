@@ -29,7 +29,7 @@ namespace AddressValidator.Data.Models.Swagger.Examples
 
             var result = new AddressValidatorResult
             {
-                AddressValidatorService = AddressValidatorType.SmartyStreets,
+                AddressValidatorService = AddressValidatorEnum.SmartyStreets,
                 Addresses = addresses
             };
 

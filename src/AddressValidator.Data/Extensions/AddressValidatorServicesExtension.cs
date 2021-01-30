@@ -23,7 +23,7 @@ namespace AddressValidator.Data.Extensions
 
             // factories
             services.AddTransient<IAddressValidatorFactory, AddressValidatorFactory>();
-            services.AddSingleton<Func<AddressValidatorType, IAddressValidatorApi>>(AddressValidatorFactory.GetAddressValidatorApi);
+            services.AddSingleton<Func<AddressValidatorEnum, IAddressValidatorApi>>(AddressValidatorFactory.GetAddressValidatorApi);
 
             // validator services
             services.AddTransient<IAddressValidatorService, AddressValidatorService>();

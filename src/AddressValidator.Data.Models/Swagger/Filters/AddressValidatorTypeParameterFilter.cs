@@ -25,7 +25,7 @@ namespace AddressValidator.Data.Models.Swagger.Filters
             {
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
-                    IEnumerable<string> names = (from action in (AddressValidatorType[])Enum.GetValues(typeof(AddressValidatorType)) select action.ToString()).ToList();
+                    IEnumerable<string> names = (from action in (AddressValidatorEnum[])Enum.GetValues(typeof(AddressValidatorEnum)) select action.ToString()).ToList();
                     parameter.Schema.Enum = names.Select(p => new OpenApiString(p)).ToList<IOpenApiAny>();
                 }
             }

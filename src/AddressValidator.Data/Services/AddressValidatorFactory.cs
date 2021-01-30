@@ -10,7 +10,7 @@ namespace AddressValidator.Data.Services
 {
     public class AddressValidatorFactory : IAddressValidatorFactory
     {
-        public static Func<IServiceProvider, Func<AddressValidatorType, IAddressValidatorApi>> GetAddressValidatorApi =>
+        public static Func<IServiceProvider, Func<AddressValidatorEnum, IAddressValidatorApi>> GetAddressValidatorApi =>
             service =>
             {
                 return
@@ -18,11 +18,11 @@ namespace AddressValidator.Data.Services
                     {
                         switch (addressValidatorType)
                         {
-                            case AddressValidatorType.SmartyStreets:
+                            case AddressValidatorEnum.SmartyStreets:
                                 return service.GetServices<IAddressValidatorApi>().First(s => s is SmartyStreetsAddressValidator);
-                            case AddressValidatorType.Usps:
+                            case AddressValidatorEnum.Usps:
                                 return service.GetServices<IAddressValidatorApi>().First(s => s is UspsAddressValidator);
-                            case AddressValidatorType.Default:
+                            case AddressValidatorEnum.Default:
                             default:
                                 throw new ArgumentException("Could not resolve address locator service.");
                         }
