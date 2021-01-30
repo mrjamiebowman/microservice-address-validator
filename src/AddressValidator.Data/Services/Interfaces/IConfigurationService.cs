@@ -2,6 +2,7 @@
 using AddressValidator.Data.Models.Configuration;
 using AddressValidator.Data.Models.Enums;
 using System.Collections.Generic;
+using AddressValidator.Data.Configuration.Metadata;
 
 namespace AddressValidator.Data.Services.Interfaces
 {

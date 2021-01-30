@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Threading;
 using System.Threading.Tasks;
-using AddressValidator.Data.Models.Configuration;
+using AddressValidator.Data.Configuration.Metadata;
 using AddressValidator.Data.Models.Enums;
 using AddressValidator.Data.Services.Interfaces;
 

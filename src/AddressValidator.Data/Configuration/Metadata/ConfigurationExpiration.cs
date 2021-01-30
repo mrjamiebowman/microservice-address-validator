@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using AddressValidator.Data.Models.Enums;
 
-namespace AddressValidator.Data.Models.Configuration
+namespace AddressValidator.Data.Configuration.Metadata
 {
     public class ConfigurationExpiration
     {
