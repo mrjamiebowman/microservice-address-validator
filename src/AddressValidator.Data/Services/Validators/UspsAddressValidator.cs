@@ -2,12 +2,18 @@
 using AddressValidator.Data.Services.Validators.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AddressValidator.Data.Models.Configuration;
 
 namespace AddressValidator.Data.Services.Validators
 {
     public class UspsAddressValidator : IAddressValidatorApi
     {
         public bool BatchCapable => false;
+
+        public void SetConfiguration(BaseApiConfiguration config)
+        {
+            throw new System.NotImplementedException();
+        }
 
         public Task ValidateAddressAsync(ValidatedAddress address)
         {

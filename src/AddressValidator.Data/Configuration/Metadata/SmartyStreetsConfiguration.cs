@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AddressValidator.Data.Models.Configuration;
 
 namespace AddressValidator.Data.Configuration.Metadata
 {
-    public class SmartyStreetsConfiguration
+    public class SmartyStreetsConfiguration : BaseApiConfiguration
     {
         public const string Position = "SmartyStreets";
 

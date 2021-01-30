@@ -5,6 +5,7 @@ using AddressValidator.Data.Services.Validators.Interfaces;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using AddressValidator.Data.Configuration.Metadata;
 using AutoMapper;
 using Prometheus;
 
@@ -14,6 +15,7 @@ namespace AddressValidator.Data.Services
     {
         private readonly Func<AddressValidatorEnum, IAddressValidatorApi> _validatorFactory;
         private readonly IMapper _mapper;
+        private readonly IConfigurationService _configurationService;
 
         private IAddressValidatorApi _api;
 
@@ -22,10 +24,11 @@ namespace AddressValidator.Data.Services
         private static readonly Counter _promInvalidAddressCounter = Metrics.CreateCounter("addressvalidation_invalid_total", "Number of addresses unsuccessfully validated.");
 
 
-        public AddressValidatorService(Func<AddressValidatorEnum, IAddressValidatorApi> validatorFactory, IMapper mapper)
+        public AddressValidatorService(Func<AddressValidatorEnum, IAddressValidatorApi> validatorFactory, IConfigurationService configurationService, IMapper mapper)
         {
             _mapper = mapper;
             _validatorFactory = validatorFactory;
+            _configurationService = configurationService;
         }
 
         // get validator service
@@ -46,6 +49,7 @@ namespace AddressValidator.Data.Services
 
             // get api
             _api = await GetAddressValidatorService(addressValidator);
+            _api.SetConfiguration(_configurationService.GetApiConfiguration(tenant, addressValidator.ToString()));
             
             if (_api.BatchCapable == true)
             {

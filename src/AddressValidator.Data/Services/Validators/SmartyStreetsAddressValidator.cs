@@ -6,6 +6,7 @@ using AddressValidator.Data.Models;
 using AddressValidator.Data.Services.Validators.Interfaces;
 using System.Threading.Tasks;
 using AddressValidator.Data.Configuration.Metadata;
+using AddressValidator.Data.Models.Configuration;
 using SmartyStreets;
 using SmartyStreets.USStreetApi;
 
@@ -13,15 +14,18 @@ namespace AddressValidator.Data.Services.Validators
 {
     public class SmartyStreetsAddressValidator : ISmartyStreetsAddressValidator, IAddressValidatorApi
     {
-        private readonly DefaultCompanyConfiguration _defaultCompanyConfig;
-        private readonly CompaniesConfiguration _companiesConfiguration;
+        private SmartyStreetsConfiguration _smartyStreetsConfiguration;
 
         public bool BatchCapable => true;
 
-        public SmartyStreetsAddressValidator(DefaultCompanyConfiguration defaultCompanyConfig, CompaniesConfiguration companiesConfiguration)
+        public SmartyStreetsAddressValidator()
         {
-            _companiesConfiguration = companiesConfiguration;
-            _defaultCompanyConfig = defaultCompanyConfig;
+
+        }
+
+        public void SetConfiguration(BaseApiConfiguration config)
+        {
+            _smartyStreetsConfiguration = config as SmartyStreetsConfiguration ?? throw new ArgumentException(nameof(config));
         }
 
         public Task ValidateAddressAsync(ValidatedAddress address)
@@ -33,7 +37,7 @@ namespace AddressValidator.Data.Services.Validators
         public Task ValidateAddressesAsync(List<ValidatedAddress> addresses)
         {
             // TODO: map configuration to correct service
-            var client = new ClientBuilder(_defaultCompanyConfig.SmartyStreets.Key, _defaultCompanyConfig.SmartyStreets.AuthToken).BuildUsStreetApiClient();
+            var client = new ClientBuilder(_smartyStreetsConfiguration.Key, _smartyStreetsConfiguration.AuthToken).BuildUsStreetApiClient();
             var batch = new Batch();
 
             try

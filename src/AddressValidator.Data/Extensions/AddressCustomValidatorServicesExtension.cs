@@ -37,6 +37,7 @@ namespace AddressValidator.Data.Extensions
 
             // validator services
             services.AddTransient<IAddressValidatorService, AddressValidatorService>();
+            services.AddTransient<IConfigurationService, ConfigurationService>();
 
             // validator apis
             services.AddTransient<IAddressValidatorApi, SmartyStreetsAddressValidator>();
