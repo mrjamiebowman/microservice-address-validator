@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AddressValidator.Data.Configuration
+namespace AddressValidator.Data.Configuration.Metadata
 {
     public class SmartyStreetsConfiguration
     {

@@ -17,9 +17,19 @@ namespace AddressValidator.Data.Extensions
         public static void AddAddressValidatorServices(this IServiceCollection services, IConfiguration config)
         {
             // config
-            var smartyStreetsConfig = new SmartyStreetsConfiguration();
-            config.GetSection(SmartyStreetsConfiguration.Position).Bind(smartyStreetsConfig);
-            services.AddSingleton<SmartyStreetsConfiguration>(smartyStreetsConfig);
+            ////var smartyStreetsConfig = new SmartyStreetsConfiguration();
+            ////config.GetSection(SmartyStreetsConfiguration.Position).Bind(smartyStreetsConfig);
+            ////services.AddSingleton<SmartyStreetsConfiguration>(smartyStreetsConfig);
+
+            // config: default company (single tenant)
+            var defaultCompanyConfig = new DefaultCompanyConfiguration();
+            config.GetSection(DefaultCompanyConfiguration.Position).Bind(defaultCompanyConfig);
+            services.AddSingleton<DefaultCompanyConfiguration>(defaultCompanyConfig);
+
+            // config: company/applications (multi-tenant)
+            var companiesConfiguration = new CompaniesConfiguration();
+            config.GetSection(CompaniesConfiguration.Position).Bind(companiesConfiguration);
+            services.AddSingleton<CompaniesConfiguration>(companiesConfiguration);
 
             // factories
             services.AddTransient<IAddressValidatorFactory, AddressValidatorFactory>();
