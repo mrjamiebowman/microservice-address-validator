@@ -25,7 +25,7 @@ namespace AddressValidator.Api.Health
         {
             var healthCheckResultHealthy = true;
 
-            // heck default configuration
+            // check default configuration
 
             // check companies/applications configuration
 
