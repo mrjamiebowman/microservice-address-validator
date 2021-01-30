@@ -4,7 +4,7 @@ using System.Text;
 using AddressValidator.Data.Models.Enums;
 using Swashbuckle.AspNetCore.Filters;
 
-namespace AddressValidator.Data.Models.Swagger
+namespace AddressValidator.Data.Models.Swagger.Examples
 {
     class AddressValidatorResultExample : InternalClasses, IExamplesProvider<AddressValidatorResult>
     {
