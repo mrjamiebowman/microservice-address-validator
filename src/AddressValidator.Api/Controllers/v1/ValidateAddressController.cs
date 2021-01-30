@@ -1,4 +1,5 @@
 ﻿using AddressValidator.Data.Models;
+using AddressValidator.Data.Models.Enums;
 using AddressValidator.Data.Models.Swagger.Examples;
 using AddressValidator.Data.Services.Interfaces;
 using AutoMapper;
@@ -7,11 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Filters;
 using System.Threading.Tasks;
 using System.Web.Http;
-using AddressValidator.Data.Models.Enums;
-using AddressValidator.Data.Services;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 
-namespace AddressValidator.Api.Controllers
+namespace AddressValidator.Api.Controllers.v1
 {
 
     [ApiController]

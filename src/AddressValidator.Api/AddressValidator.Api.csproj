@@ -21,8 +21,4 @@
     <ProjectReference Include="..\AddressValidator.Data\AddressValidator.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\v1\" />
-  </ItemGroup>
-
 </Project>
