@@ -39,9 +39,10 @@ namespace AddressValidator.Data.Services
         {
             // result
             var result = new AddressValidatorResult();
-
+            
             // map request to result object
             result = _mapper.Map<AddressValidatorResult>(request);
+            result.AddressValidatorService = addressValidator;
 
             // get api
             _api = await GetAddressValidatorService(addressValidator);
