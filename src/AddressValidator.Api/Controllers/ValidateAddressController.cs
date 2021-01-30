@@ -37,7 +37,6 @@ namespace AddressValidator.Api.Controllers
         /// <response code="200">Addresses validated</response>
         /// <response code="500">If the request fails</response>     
         [HttpPost]
-        [Route("{addressValidator}")]
         [ProducesResponseType(typeof(AddressValidatorResult),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [SwaggerRequestExample(typeof(AddressValidatorRequest), typeof(AddressValidatorRequestExample))]
