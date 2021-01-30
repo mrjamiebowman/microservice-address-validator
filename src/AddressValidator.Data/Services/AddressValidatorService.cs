@@ -44,8 +44,11 @@ namespace AddressValidator.Data.Services
             var result = new AddressValidatorResult();
             
             // map request to result object
-            result = _mapper.Map<AddressValidatorResult>(request);
-            result.AddressValidatorService = addressValidator;
+            result = _mapper.Map<AddressValidatorResult>(request, opt =>
+                {
+                    opt.Items["AddressValidatorService"] = addressValidator;
+                }
+            );
 
             // get api
             _api = await GetAddressValidatorService(addressValidator);
