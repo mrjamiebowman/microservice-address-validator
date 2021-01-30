@@ -15,7 +15,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using AddressValidator.Data.Models.Swagger.Filters;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace AddressValidator.Api
@@ -44,11 +43,6 @@ namespace AddressValidator.Api
 
                 // enable swagger request/response examples
                 c.ExampleFilters();
-
-                c.DescribeAllEnumsAsStrings();
-
-                // parameter filters
-                //c.ParameterFilter<AddressValidatorTypeParameterFilter>();
             });
 
             // swagger examples

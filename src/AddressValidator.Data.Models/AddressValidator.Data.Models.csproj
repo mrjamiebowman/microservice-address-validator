@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Swagger\Filters\" />
     <Folder Include="Swagger\Helpers\" />
   </ItemGroup>
 
