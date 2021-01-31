@@ -76,7 +76,7 @@ namespace AddressValidator.Data.Services.Validators
                     {
                         // invalid address or some error
                         address.Valid = false;
-                        address.UiMessage = error.GetXmlElement("Description").Trim());
+                        address.UiMessage = error.GetXmlElement("Description").Trim();
                         continue;
                     }
 
