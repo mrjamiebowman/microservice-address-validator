@@ -3,7 +3,7 @@
 
 * .NET 5
 * Single or Multi-tenant or both
-* Swagger UI
+* Swagger UI (HTTP Endpoint)
 * Kubernetes / Helm
 * Health Checks
 * Azure App Configuration Support
