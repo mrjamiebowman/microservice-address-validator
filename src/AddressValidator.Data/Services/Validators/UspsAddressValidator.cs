@@ -50,11 +50,13 @@ namespace AddressValidator.Data.Services.Validators
 
                 var url = "http://production.shippingapis.com/ShippingAPI.dll?API=Verify&XML=" + requestDoc;
                 Console.WriteLine(url);
+                
                 var client = new WebClient();
                 var response = client.DownloadString(url);
 
                 var xdoc = XDocument.Parse(response.ToString());
                 Console.WriteLine(xdoc.ToString());
+
                 foreach (XElement element in xdoc.Descendants("Address"))
                 {
                     Console.WriteLine("-------------------------------");
@@ -65,6 +67,19 @@ namespace AddressValidator.Data.Services.Validators
                     Console.WriteLine("State:		" + element.GetXMLElement("State"));
                     Console.WriteLine("Zip5:		" + element.GetXMLElement("Zip5"));
                     Console.WriteLine("Zip4:		" + element.GetXMLElement("Zip4"));
+
+                    //address.Id = element.GetXMLElement("ID");
+                    address.Business = element.GetXMLElement("Business");
+
+                    address.StreetAddress1 = element.GetXMLElement("Address1");
+                    address.StreetAddress2 = element.GetXMLElement("Address2");
+                    address.City = element.GetXMLElement("City");
+                    address.State = element.GetXMLElement("State");
+
+                    // postalcode
+                    var zip4 = element.GetXMLElement("Zip4");
+                    var zip5 = element.GetXMLElement("Zip5");
+                    address.PostalCode = $"{zip4}-{zip5}";
                 }
             }
             catch (WebException e)
