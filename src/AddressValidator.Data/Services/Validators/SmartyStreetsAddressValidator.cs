@@ -80,18 +80,22 @@ namespace AddressValidator.Data.Services.Validators
 
                 foreach (var candidate in candidates)
                 {
-                    addresses[0].Valid = true;
-
                     var components = candidate.Components;
                     var metadata = candidate.Metadata;
 
-                    Console.WriteLine("\nCandidate " + candidate.CandidateIndex + ":");
+                    // update address record
+                    addresses[0].Valid = true;
+                    addresses[0].PostalCode = $"{components.ZipCode}-{components.Plus4Code}";
+                    addresses[0].Latitude = metadata.Latitude.ToString();
+                    addresses[0].Longitude = metadata.Longitude.ToString();
+
+                    Console.WriteLine("\nCandidate      " + candidate.CandidateIndex + ":");
                     Console.WriteLine("Delivery line 1: " + candidate.DeliveryLine1);
-                    Console.WriteLine("Last line:	   " + candidate.LastLine);
+                    Console.WriteLine("Last line:	    " + candidate.LastLine);
                     Console.WriteLine("ZIP Code:		" + components.ZipCode + "-" + components.Plus4Code);
-                    Console.WriteLine("County:		  " + metadata.CountyName);
+                    Console.WriteLine("County:		    " + metadata.CountyName);
                     Console.WriteLine("Latitude:		" + metadata.Latitude);
-                    Console.WriteLine("Longitude:	   " + metadata.Longitude);
+                    Console.WriteLine("Longitude:	    " + metadata.Longitude);
                 }
 
                 Console.WriteLine();

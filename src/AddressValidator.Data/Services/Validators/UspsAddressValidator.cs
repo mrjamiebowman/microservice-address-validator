@@ -60,15 +60,6 @@ namespace AddressValidator.Data.Services.Validators
 
                 foreach (XElement element in xdoc.Descendants("Address"))
                 {
-                    Console.WriteLine("-------------------------------");
-                    Console.WriteLine("Address ID:	" + element.GetXmlAttribute("ID"));
-                    Console.WriteLine("Address1:	" + element.GetXmlElement("Address1"));
-                    Console.WriteLine("Address2:	" + element.GetXmlElement("Address2"));
-                    Console.WriteLine("City:		" + element.GetXmlElement("City"));
-                    Console.WriteLine("State:		" + element.GetXmlElement("State"));
-                    Console.WriteLine("Zip5:		" + element.GetXmlElement("Zip5"));
-                    Console.WriteLine("Zip4:		" + element.GetXmlElement("Zip4"));
-
                     // check for errors
                     XElement error = element.Descendants("Error").SingleOrDefault();
 
@@ -93,7 +84,7 @@ namespace AddressValidator.Data.Services.Validators
                     // postal code
                     var zip4 = element.GetXmlElement("Zip4");
                     var zip5 = element.GetXmlElement("Zip5");
-                    address.PostalCode = $"{zip4}-{zip5}";
+                    address.PostalCode = $"{zip5}-{zip4}";
                 }
             }
             catch (WebException e)
