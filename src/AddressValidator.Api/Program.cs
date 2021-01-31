@@ -25,7 +25,6 @@ namespace AddressValidator.Api
                     webBuilder.ConfigureAppConfiguration(config =>
                     {
                         config.SetBasePath(Directory.GetCurrentDirectory());
-                        config.AddEnvironmentVariables();
 
                         var featConfigProvider = Environment.GetEnvironmentVariable("FEATURE_CONFIG_PROVIDER");
 
