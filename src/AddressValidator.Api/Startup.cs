@@ -96,7 +96,6 @@ namespace AddressValidator.Api
         {
             if (env.IsDevelopment())
             {
-                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AddressValidator.Api v1"));
                 app.UseDeveloperExceptionPage();
             }
             else
