@@ -68,8 +68,12 @@ namespace AddressValidator.Data.Services.Validators
                     Console.WriteLine("Zip5:		" + element.GetXMLElement("Zip5"));
                     Console.WriteLine("Zip4:		" + element.GetXMLElement("Zip4"));
 
-                    //address.Id = element.GetXMLElement("ID");
+                    // check for errors
+
+
+                    // valid
                     address.Business = element.GetXMLElement("Business");
+                    address.UiMessage = element.GetXMLElement("ReturnText");
 
                     address.StreetAddress1 = element.GetXMLElement("Address1");
                     address.StreetAddress2 = element.GetXMLElement("Address2");
