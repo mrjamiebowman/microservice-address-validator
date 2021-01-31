@@ -60,10 +60,10 @@ namespace AddressValidator.Data.Services
             } else
             {
                 // validate
-                //foreach (var address in result.ValidatedAddresses)
-                //{
-                //    await _api.ValidateAddressesAsync(address);
-                //}
+                foreach (var address in result.Addresses)
+                {
+                    await _api.ValidateAddressAsync(address);
+                }
             }
 
             // prometheus

@@ -1,44 +1,53 @@
-﻿using System;
+﻿using AddressValidator.Data.Configuration.Metadata;
+using AddressValidator.Data.Extensions;
 using AddressValidator.Data.Models;
+using AddressValidator.Data.Models.Configuration;
 using AddressValidator.Data.Services.Validators.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using AddressValidator.Data.Models.Configuration;
-using AddressValidator.Data.Extensions;
 
 namespace AddressValidator.Data.Services.Validators
 {
     public class UspsAddressValidator : IAddressValidatorApi
     {
         public bool BatchCapable => false;
+        private UspsConfiguration _uspsConfiguration;
 
         public void SetConfiguration(BaseApiConfiguration config)
         {
-            throw new System.NotImplementedException();
+            _uspsConfiguration = config as UspsConfiguration ?? throw new ArgumentException(nameof(config));
         }
 
-        public Task ValidateAddressAsync(ValidatedAddress address)
+        private Task<XDocument> ConvertAddressToUspsXDoc(ValidatedAddress address)
         {
             XDocument requestDoc = new XDocument(
                 new XElement("AddressValidateRequest",
-                    new XAttribute("USERID", ""),
+                    new XAttribute("USERID", $"{_uspsConfiguration.Username}"),
                     new XElement("Revision", "1"),
                     new XElement("Address",
                         new XAttribute("ID", "0"),
-                        new XElement("Address1", "2335 S State"),
-                        new XElement("Address2", "Suite 300"),
-                        new XElement("City", "Provo"),
-                        new XElement("State", "UT"),
-                        new XElement("Zip5", "84604"),
-                        new XElement("Zip4", "")
+                        new XElement("Address1", $"{address.StreetAddress1}"),
+                        new XElement("Address2", $"{address.StreetAddress2}"),
+                        new XElement("City", $"{address.City}"),
+                        new XElement("State", $"{address.State}"),
+                        new XElement("Zip5", $"{address.PostalCode}"),
+                        new XElement("Zip4", $"")
                     )
                 )
             );
 
+            return Task.FromResult(requestDoc);
+        }
+
+        public async Task ValidateAddressAsync(ValidatedAddress address)
+        {
             try
             {
+                XDocument requestDoc = await ConvertAddressToUspsXDoc(address);
+
                 var url = "http://production.shippingapis.com/ShippingAPI.dll?API=Verify&XML=" + requestDoc;
                 Console.WriteLine(url);
                 var client = new WebClient();
@@ -62,8 +71,6 @@ namespace AddressValidator.Data.Services.Validators
             {
                 Console.WriteLine(e.ToString());
             }
-
-            return Task.CompletedTask;
         }
 
 

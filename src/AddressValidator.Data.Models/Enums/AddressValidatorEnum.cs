@@ -8,6 +8,6 @@ namespace AddressValidator.Data.Models.Enums
     {
         Default,
         SmartyStreets,
-        Usps
+        USPS
     }
 }

@@ -20,7 +20,7 @@ namespace AddressValidator.Data.Services
                         {
                             case AddressValidatorEnum.SmartyStreets:
                                 return service.GetServices<IAddressValidatorApi>().First(s => s is SmartyStreetsAddressValidator);
-                            case AddressValidatorEnum.Usps:
+                            case AddressValidatorEnum.USPS:
                                 return service.GetServices<IAddressValidatorApi>().First(s => s is UspsAddressValidator);
                             case AddressValidatorEnum.Default:
                             default:
