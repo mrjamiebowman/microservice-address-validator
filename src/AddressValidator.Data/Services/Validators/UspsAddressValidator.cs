@@ -48,7 +48,7 @@ namespace AddressValidator.Data.Services.Validators
             {
                 XDocument requestDoc = await ConvertAddressToUspsXDoc(address);
 
-                var url = "http://production.shippingapis.com/ShippingAPI.dll?API=Verify&XML=" + requestDoc;
+                var url = $"http://production.shippingapis.com/ShippingAPI.dll?API=Verify&XML={requestDoc}";
                 Console.WriteLine(url);
                 
                 var client = new WebClient();
@@ -76,7 +76,7 @@ namespace AddressValidator.Data.Services.Validators
                     address.City = element.GetXMLElement("City");
                     address.State = element.GetXMLElement("State");
 
-                    // postalcode
+                    // postal code
                     var zip4 = element.GetXMLElement("Zip4");
                     var zip5 = element.GetXMLElement("Zip5");
                     address.PostalCode = $"{zip4}-{zip5}";
