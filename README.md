@@ -2,9 +2,11 @@
 .NET Microservice for Address Validation
 
 * .NET 5
+* Single or Multi-tenant or both
 * Swagger UI
 * Kubernetes / Helm
 * Health Checks
+* Azure App Configuration Support
 
 ## Address Validators
 This microservice supports these address validators. The design of this system makes it easy to add other address validator services. Pull requests are welcomed. To start with these are included by default.
