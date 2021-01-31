@@ -5,6 +5,7 @@ using AddressValidator.Data.Models.Configuration;
 using AddressValidator.Data.Services.Validators.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -69,9 +70,18 @@ namespace AddressValidator.Data.Services.Validators
                     Console.WriteLine("Zip4:		" + element.GetXmlElement("Zip4"));
 
                     // check for errors
+                    XElement error = element.Descendants("Error").SingleOrDefault();
 
+                    if (error != null)
+                    {
+                        // invalid address or some error
+                        address.Valid = false;
+                        address.UiMessage = error.GetXmlElement("Description").Trim());
+                        continue;
+                    }
 
                     // valid
+                    address.Valid = true;
                     address.Business = element.GetXmlElement("Business");
                     address.UiMessage = element.GetXmlElement("ReturnText");
 
