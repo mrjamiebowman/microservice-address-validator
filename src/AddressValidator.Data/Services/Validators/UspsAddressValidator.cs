@@ -60,29 +60,29 @@ namespace AddressValidator.Data.Services.Validators
                 foreach (XElement element in xdoc.Descendants("Address"))
                 {
                     Console.WriteLine("-------------------------------");
-                    Console.WriteLine("Address ID:	" + element.GetXMLAttribute("ID"));
-                    Console.WriteLine("Address1:	" + element.GetXMLElement("Address1"));
-                    Console.WriteLine("Address2:	" + element.GetXMLElement("Address2"));
-                    Console.WriteLine("City:		" + element.GetXMLElement("City"));
-                    Console.WriteLine("State:		" + element.GetXMLElement("State"));
-                    Console.WriteLine("Zip5:		" + element.GetXMLElement("Zip5"));
-                    Console.WriteLine("Zip4:		" + element.GetXMLElement("Zip4"));
+                    Console.WriteLine("Address ID:	" + element.GetXmlAttribute("ID"));
+                    Console.WriteLine("Address1:	" + element.GetXmlElement("Address1"));
+                    Console.WriteLine("Address2:	" + element.GetXmlElement("Address2"));
+                    Console.WriteLine("City:		" + element.GetXmlElement("City"));
+                    Console.WriteLine("State:		" + element.GetXmlElement("State"));
+                    Console.WriteLine("Zip5:		" + element.GetXmlElement("Zip5"));
+                    Console.WriteLine("Zip4:		" + element.GetXmlElement("Zip4"));
 
                     // check for errors
 
 
                     // valid
-                    address.Business = element.GetXMLElement("Business");
-                    address.UiMessage = element.GetXMLElement("ReturnText");
+                    address.Business = element.GetXmlElement("Business");
+                    address.UiMessage = element.GetXmlElement("ReturnText");
 
-                    address.StreetAddress1 = element.GetXMLElement("Address1");
-                    address.StreetAddress2 = element.GetXMLElement("Address2");
-                    address.City = element.GetXMLElement("City");
-                    address.State = element.GetXMLElement("State");
+                    address.StreetAddress1 = element.GetXmlElement("Address1");
+                    address.StreetAddress2 = element.GetXmlElement("Address2");
+                    address.City = element.GetXmlElement("City");
+                    address.State = element.GetXmlElement("State");
 
                     // postal code
-                    var zip4 = element.GetXMLElement("Zip4");
-                    var zip5 = element.GetXMLElement("Zip5");
+                    var zip4 = element.GetXmlElement("Zip4");
+                    var zip5 = element.GetXmlElement("Zip5");
                     address.PostalCode = $"{zip4}-{zip5}";
                 }
             }

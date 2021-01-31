@@ -4,7 +4,7 @@ namespace AddressValidator.Data.Extensions
 {
     public static class XmlElementExtensions
     {
-        public static string GetXMLElement(this XElement element, string name)
+        public static string GetXmlElement(this XElement element, string name)
         {
             var el = element.Element(name);
 
@@ -16,7 +16,7 @@ namespace AddressValidator.Data.Extensions
             return "";
         }
 
-        public static string GetXMLAttribute(this XElement element, string name)
+        public static string GetXmlAttribute(this XElement element, string name)
         {
             var el = element.Attribute(name);
 
