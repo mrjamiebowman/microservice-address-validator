@@ -17,27 +17,39 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using AddressValidator.Data.Swagger;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace AddressValidator.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IHostEnvironment _hostEnvironment;
+
+        public readonly IConfiguration Configuration;
+
+        public Startup(IConfiguration configuration, IHostEnvironment environment)
         {
+            _hostEnvironment = environment;
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            if (_hostEnvironment.IsDevelopment())
+            {
+
+            }
+
             services.AddControllers()
                 .AddJsonOptions(options =>
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
             services.AddAddressValidatorServices(Configuration);
             services.AddCustomAutoMapperService();
-
             services.AddCustomHealthChecks();
 
             services.AddApiVersioning(o =>
@@ -46,9 +58,9 @@ namespace AddressValidator.Api
                 o.DefaultApiVersion = new ApiVersion(1, 0);
                 o.ReportApiVersions = true;
                 o.ApiVersionReader = ApiVersionReader.Combine(
-                    new MediaTypeApiVersionReader("v"),
-                    new HeaderApiVersionReader("api-version"),
-                    new QueryStringApiVersionReader("v", "api-version")
+                    new MediaTypeApiVersionReader("v")
+                    //new HeaderApiVersionReader("api-version"),
+                    //new QueryStringApiVersionReader("api-version")
                 );
             });
 
@@ -62,14 +74,17 @@ namespace AddressValidator.Api
                     // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
                     // can also be used to control the format of the API version in route templates
                     options.SubstituteApiVersionInUrl = true;
-                });
+                }
+            );
 
-            services.AddSwaggerGen(c =>
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+            services.AddSwaggerGen(o =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AddressValidator.Api", Version = "v1" });
+                // default values
+                o.OperationFilter<SwaggerDefaultValues>();
 
                 // enable swagger request/response examples
-                c.ExampleFilters();
+                o.ExampleFilters();
             });
 
             // swagger examples
@@ -77,13 +92,12 @@ namespace AddressValidator.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
+                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AddressValidator.Api v1"));
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AddressValidator.Api v1"));
             }
             else
             {
@@ -92,6 +106,15 @@ namespace AddressValidator.Api
 
             app.UseRouting();
             app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(o =>
+            {
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    o.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+                }
+            });
 
             app.UseEndpoints(endpoints =>
             {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -24,7 +25,7 @@ namespace AddressValidator.Data.Swagger
         {
             var apiDescription = context.ApiDescription;
 
-            //operation.Deprecated |= apiDescription.IsDeprecated();
+            operation.Deprecated |= apiDescription.IsDeprecated();
 
             if (operation.Parameters == null)
             {
@@ -35,19 +36,28 @@ namespace AddressValidator.Data.Swagger
             // REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/pull/413
             foreach (var parameter in operation.Parameters)
             {
-                var description = apiDescription.ParameterDescriptions.First(p => p.Name == parameter.Name);
-
-                if (parameter.Description == null)
+                if (parameter.Name == "api-version" && parameter.In == ParameterLocation.Header)
                 {
-                    parameter.Description = description.ModelMetadata?.Description;
+                    operation.Parameters.Remove(parameter);
                 }
+                
+                //// default value for header api version
+                //if (parameter.Name == "api-version" && parameter.In == ParameterLocation.Header)
+                //{
+                //    var description = apiDescription.ParameterDescriptions.First(p => p.Name == parameter.Name);
 
-                if (parameter.Schema.Default == null && description.DefaultValue != null)
-                {
-                    parameter.Schema.Default = new OpenApiString(description.DefaultValue.ToString());
-                }
+                //    if (parameter.Description == null)
+                //    {
+                //        parameter.Description = description.ModelMetadata?.Description;
+                //    }
 
-                parameter.Required |= description.IsRequired;
+                //    if (parameter.Schema.Default == null && description.DefaultValue != null)
+                //    {
+                //        parameter.Schema.Default = new OpenApiString(description.DefaultValue.ToString());
+                //    }
+
+                //    parameter.Required |= description.IsRequired;
+                //}
             }
         }
     }
