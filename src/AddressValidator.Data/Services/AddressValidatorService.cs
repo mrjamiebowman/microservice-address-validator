@@ -20,8 +20,8 @@ namespace AddressValidator.Data.Services
         private IAddressValidatorApi _api;
 
         // prometheus
-        private static readonly Counter _promValidAddressCounter = Metrics.CreateCounter("addressvalidation_valid_total", "Number of addresses successfully validated.");
-        private static readonly Counter _promInvalidAddressCounter = Metrics.CreateCounter("addressvalidation_invalid_total", "Number of addresses unsuccessfully validated.");
+        private static readonly Counter PomValidAddressCounter = Metrics.CreateCounter("addressvalidation_valid_total", "Number of addresses successfully validated.");
+        private static readonly Counter PromInvalidAddressCounter = Metrics.CreateCounter("addressvalidation_invalid_total", "Number of addresses unsuccessfully validated.");
 
 
         public AddressValidatorService(Func<AddressValidatorEnum, IAddressValidatorApi> validatorFactory, IConfigurationService configurationService, IMapper mapper)
@@ -67,8 +67,8 @@ namespace AddressValidator.Data.Services
             }
 
             // prometheus
-            _promValidAddressCounter.Inc(result.Addresses.Where(x => x.Valid == true).Count());
-            _promInvalidAddressCounter.Inc(result.Addresses.Where(x => x.Valid == false).Count());
+            PomValidAddressCounter.Inc(result.Addresses.Where(x => x.Valid == true).Count());
+            PromInvalidAddressCounter.Inc(result.Addresses.Where(x => x.Valid == false).Count());
 
             return result;
         }
