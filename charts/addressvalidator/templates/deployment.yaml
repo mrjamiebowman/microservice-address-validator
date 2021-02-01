@@ -59,21 +59,27 @@ spec:
               mountPath: /app/Settings
 {{- end }}
           env:
+            {{- if eq .Values.features.failToDefault "azure" }}
             - name: "FEATURE_FAIL_TO_DEFAULT"
               valueFrom:
                 configMapRef:
                   key: failToDefault
                   name: {{ .Release.Name }}-features
+            {{- end }}
+            {{- if eq .Values.features.failToDefault "azure" }}
             - name: "FEATURE_CONFIG_PROVIDER"
               valueFrom:
                 configMapRef:
                   key: configProvider
                   name: {{ .Release.Name }}-features
+            {{- end }}
+            {{- if eq .Values.features.failToDefault "azure" }}
             - name: "FEATURE_API_KEY_EXP_DAYS"
               valueFrom:
                 configMapRef:
                   key: apiKeyExpDays
                   name: {{ .Release.Name }}-features
+            {{- end }}
             {{- if eq .Values.features.configProvider "azure" }}         
             - name: "AZ_APPCONFIG_CONNECTION_STRING"
               valueFrom:

@@ -3,9 +3,15 @@ kind: ConfigMap
 metadata:
     name: {{ .Release.Name }}-features
 data:
+    {{- if eq .Values.features.failToDefault "azure" }}
     failToDefault: {{ .Values.features.failToDefault }}
+    {{- end }}
+    {{- if eq .Values.features.configProvider "azure" }}
     configProvider: {{ .Values.features.configProvider }}
+    {{- end }}
+    {{- if eq .Values.features.apiKeyExpDays "azure" }}
     apiKeyExpDays: {{ .Values.features.apiKeyExpDays }}
+    {{- end }}
 ---
 {{- if eq .Values.features.configProvider "appsettings" -}}
 apiVersion: v1
