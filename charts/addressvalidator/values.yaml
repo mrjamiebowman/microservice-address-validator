@@ -22,6 +22,8 @@ env:
   azAppConfigConnStr: ""
   azAppConfigLabelFilter: ""
 
+appSettingsPath: "config/appsettings.json"
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

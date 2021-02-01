@@ -14,14 +14,5 @@ metadata:
     name: {{ .Release.Name }}-appsettings
 data:
   appsettings.json: |-
-    {
-      "Logging": {
-        "LogLevel": {
-          "Default": "Information",
-          "Microsoft": "Warning",
-          "Microsoft.Hosting.Lifetime": "Information"
-        }
-      },
-      "AllowedHosts": "*"
-    }
+    {{ .Files.Get .Values.appSettingsPath | indent 2 }}
 {{- end }}
