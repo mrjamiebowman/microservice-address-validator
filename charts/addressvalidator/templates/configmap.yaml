@@ -7,7 +7,7 @@ data:
     configProvider: {{ .Values.features.configProvider }}
     apiKeyExpDays: {{ .Values.features.apiKeyExpDays }}
 ---
-{{- if eq .Values.features.configProvider "" -}}
+{{- if eq .Values.features.configProvider "appsettings" -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:

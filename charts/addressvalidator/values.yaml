@@ -12,7 +12,7 @@ image:
 
 features:
   failToDefault: ""
-  configProvider: "" # azure
+  configProvider: "azure" # (appsettings, azure)
   apiKeyExpDays: "30" # disabled if azure app config is used..
 
 env:
