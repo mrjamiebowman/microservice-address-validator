@@ -52,10 +52,12 @@ spec:
               path: /
               port: http
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}                
+            {{- toYaml .Values.resources | nindent 12 }}      
+{{- if eq .Values.features.configProvider "appsettings" }}     
           volumeMounts:            
             - name: {{ .Release.Name }}-appsettings-volume
               mountPath: /app/Settings
+{{- end }}
           env:
             - name: "FEATURE_FAIL_TO_DEFAULT"
               valueFrom:
