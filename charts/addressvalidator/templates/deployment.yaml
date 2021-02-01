@@ -47,6 +47,22 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: "FEATURE_FAIL_TO_DEFAULT"
+              valueFrom:
+                configMapRef:
+                  key: failToDefault
+                  name: {{ .Release.Name }}-features
+            - name: "FEATURE_CONFIG_PROVIDER"
+              valueFrom:
+                configMapRef:
+                  key: configProvider
+                  name: {{ .Release.Name }}-features
+            - name: "FEATURE_API_KEY_EXP_DAYS"
+              valueFrom:
+                configMapRef:
+                  key: apiKeyExpDays
+                  name: {{ .Release.Name }}-features
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

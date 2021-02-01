@@ -10,13 +10,25 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
+features:
+  failToDefault: ""
+  configProvider: "" # azure
+  apiKeyExpDays: "30" # disabled if azure app config is used..
+
+env:
+  # azTenantId: ""
+  # azClientId: ""
+  # azClientSecret: ""
+  azAppConfigConnStr: ""
+  azAppConfigLabelFilter: ""
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: true
+  create: false
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
@@ -28,13 +40,13 @@ podAnnotations: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
-securityContext: {}
+securityContext:
   # capabilities:
   #   drop:
   #   - ALL
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
-  # runAsUser: 1000
+  runAsUser: 1000
 
 service:
   type: ClusterIP
@@ -68,7 +80,7 @@ resources: {}
 autoscaling:
   enabled: false
   minReplicas: 1
-  maxReplicas: 100
+  maxReplicas: 5
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
