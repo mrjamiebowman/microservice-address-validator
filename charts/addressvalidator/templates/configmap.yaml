@@ -14,5 +14,5 @@ metadata:
     name: {{ .Release.Name }}-appsettings
 data:
   appsettings.json: |-
-    {{ .Files.Get .Values.appSettingsPath | indent 2 }}
+{{ .Files.Get .Values.appSettingsPath | indent 4 }}
 {{- end }}

@@ -1,0 +1,1 @@
+helm install core-addressvalidator .\charts\addressvalidator\
