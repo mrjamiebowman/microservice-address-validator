@@ -24,7 +24,12 @@ env:
 
 appSettingsPath: "config/appsettings.json"
 
-imagePullSecrets: []
+imagePullSecrets: 
+  - name: dockercred
+# run helm-generate-dockersecret.ps1 to get the bvalue of the ase64 encoded credentials (.dockerconfigjson)
+docker:
+  configjson: ""
+
 nameOverride: ""
 fullnameOverride: ""
 
