@@ -38,12 +38,24 @@ namespace AddressValidator.Data.Services
                 ApplicationConfiguration app = company.Applications
                     .SingleOrDefault(x => x.Key == tenant.ApplicationId.Value.ToString()).Value;
 
+                // verify set
+                if (String.IsNullOrWhiteSpace(app.DefaultValidator))
+                {
+                    throw new Exception($"The Companies' Application's Default Validator is not set.");
+                }
+
                 // default
                 AddressValidatorEnum validator;
                 AddressValidatorEnum.TryParse(app.DefaultValidator, out validator);
                 return Task.FromResult(validator);
             } else
             {
+                // verify set
+                if (String.IsNullOrWhiteSpace(_defaultCompanyConfig.DefaultValidator))
+                {
+                    throw new Exception($"The Default Validator is not set.");
+                }
+
                 // default 
                 string defaultValidator = _defaultCompanyConfig.DefaultValidator;
                 AddressValidatorEnum validator;
