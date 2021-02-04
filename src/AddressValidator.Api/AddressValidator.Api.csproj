@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AddressValidator.Data.Models\AddressValidator.Data.Models.csproj" />
     <ProjectReference Include="..\AddressValidator.Data\AddressValidator.Data.csproj" />
   </ItemGroup>
 
