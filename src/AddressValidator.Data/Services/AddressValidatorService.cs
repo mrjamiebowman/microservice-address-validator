@@ -2,12 +2,11 @@
 using AddressValidator.Data.Models.Enums;
 using AddressValidator.Data.Services.Interfaces;
 using AddressValidator.Data.Services.Validators.Interfaces;
+using AutoMapper;
+using Prometheus;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using AddressValidator.Data.Configuration.Metadata;
-using AutoMapper;
-using Prometheus;
 
 namespace AddressValidator.Data.Services
 {
@@ -51,6 +50,11 @@ namespace AddressValidator.Data.Services
             );
 
             // get api
+            if (addressValidator == AddressValidatorEnum.Default)
+            {
+                addressValidator = await _configurationService.GetDefaultAddressValidator(tenant);
+            }
+
             _api = await GetAddressValidatorService(addressValidator);
             _api.SetConfiguration(_configurationService.GetApiConfiguration(tenant, addressValidator.ToString()));
             

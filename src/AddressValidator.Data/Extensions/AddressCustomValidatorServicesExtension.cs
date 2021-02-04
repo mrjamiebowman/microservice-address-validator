@@ -1,14 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using AddressValidator.Data.Configuration;
+﻿using AddressValidator.Data.Configuration;
 using AddressValidator.Data.Models.Enums;
 using AddressValidator.Data.Services;
 using AddressValidator.Data.Services.Interfaces;
 using AddressValidator.Data.Services.Validators;
 using AddressValidator.Data.Services.Validators.Interfaces;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace AddressValidator.Data.Extensions
 {

@@ -161,7 +161,6 @@ namespace AddressValidator.Api
                 }
 
                 var json = Encoding.UTF8.GetString(stream.ToArray());
-
                 return context.Response.WriteAsync(json);
             }
         }

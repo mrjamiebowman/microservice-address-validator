@@ -24,6 +24,33 @@ namespace AddressValidator.Data.Services
             _companiesConfiguration = companiesConfiguration;
             _defaultCompanyConfig = defaultCompanyConfig;
         }
+        
+        public Task<AddressValidatorEnum> GetDefaultAddressValidator(Tenant tenant)
+        {
+            if (tenant?.CompanyId != null && tenant?.ApplicationId != null)
+            {
+                // multi-tenant
+                CompanyConfiguration company =
+                    _companiesConfiguration.Configuration
+                        .SingleOrDefault(x => x.Key == tenant.CompanyId.Value.ToString()).Value;
+
+                // look up application
+                ApplicationConfiguration app = company.Applications
+                    .SingleOrDefault(x => x.Key == tenant.ApplicationId.Value.ToString()).Value;
+
+                // default
+                AddressValidatorEnum validator;
+                AddressValidatorEnum.TryParse(app.DefaultValidator, out validator);
+                return Task.FromResult(validator);
+            } else
+            {
+                // default 
+                string defaultValidator = _defaultCompanyConfig.DefaultValidator;
+                AddressValidatorEnum validator;
+                AddressValidatorEnum.TryParse(defaultValidator, out validator);
+                return Task.FromResult(validator);
+            }
+        }
 
         public BaseApiConfiguration GetApiConfiguration(Tenant tenant, string config)
         {
