@@ -20,6 +20,8 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace AddressValidator.Api
@@ -43,10 +45,6 @@ namespace AddressValidator.Api
             {
                 
             }
-
-            services.AddControllers()
-                .AddJsonOptions(options =>
-                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             services.AddAddressValidatorServices(Configuration);
             services.AddCustomAutoMapperService();
@@ -90,13 +88,25 @@ namespace AddressValidator.Api
             // swagger examples
             services.AddCustomSwaggerExamples();
 
+            // TODO: if config for auth
+
             // authentication
+            var requireAuthenticatedUserPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.Authority = "https://localhost:5010";
+                    options.Authority = "https://localhost:5001";
                     options.Audience = "corems";
                 });
+
+            // controllers
+            services.AddControllers(configure =>
+                {
+                    configure.Filters.Add(new AuthorizeFilter(requireAuthenticatedUserPolicy));
+                }).AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,6 +120,9 @@ namespace AddressValidator.Api
             {
                 app.UseHttpsRedirection();
             }
+
+            // TODO: if config for auth
+            app.UseAuthentication();
 
             app.UseRouting();
             app.UseAuthorization();
