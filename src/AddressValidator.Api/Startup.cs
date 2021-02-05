@@ -1,6 +1,7 @@
 using AddressValidator.Api.Extensions;
 using AddressValidator.Data.Extensions;
 using AddressValidator.Data.Swagger;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -13,13 +14,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace AddressValidator.Api
 {
@@ -88,6 +89,14 @@ namespace AddressValidator.Api
 
             // swagger examples
             services.AddCustomSwaggerExamples();
+
+            // authentication
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = "https://localhost:5010";
+                    options.Audience = "corems";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
